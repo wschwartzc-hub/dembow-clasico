@@ -1,0 +1,41 @@
+name: Publicar versión (sin recompilar)
+
+# Toma los instaladores ya compilados por una ejecución de "Compilar Dembow Clasico"
+# y los publica como Release, sin volver a compilar (gasta ~1 minuto de Actions).
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "ID de la ejecución de 'Compilar Dembow Clasico' (está en la URL de la ejecución)"
+        required: true
+      tag:
+        description: "Versión a publicar (ej. v1.0.0)"
+        required: true
+        default: v1.0.0
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+          path: dist
+
+      - name: Listar archivos
+        run: ls -laR dist
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.tag }}
+          name: Dembow Clásico ${{ inputs.tag }}
+          target_commitish: ${{ github.sha }}
+          body: |
+            **macOS:** descarga el `.dmg`, ábrelo y haz doble clic en *Instalar Dembow Clasico*.
+            **Windows:** descomprime el `.zip` y copia `Dembow Clasico.vst3` a `C:\Program Files\Common Files\VST3\`.
+          files: dist/**/*

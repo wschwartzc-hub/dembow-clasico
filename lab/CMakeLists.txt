@@ -1,0 +1,11 @@
+cmake_minimum_required(VERSION 3.22)
+project(DmbLab VERSION 0.1.0 LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 20)
+add_subdirectory(/home/claude/deps/JUCE JUCE)
+juce_add_console_app(DmbLab PRODUCT_NAME "DmbLab")
+file(GLOB PRESET_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/../Source/presets/*.cpp)
+target_sources(DmbLab PRIVATE lab.cpp ../Source/I18n.cpp
+    ../Source/synth/Patch.cpp ../Source/synth/Voice.cpp ../Source/synth/Synth.cpp ../Source/synth/Effects.cpp ${PRESET_SOURCES})
+target_include_directories(DmbLab PRIVATE ../Source)
+target_compile_definitions(DmbLab PRIVATE JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 DMB_LAB=1)
+target_link_libraries(DmbLab PRIVATE juce::juce_audio_basics juce::juce_audio_formats juce::juce_data_structures juce::juce_recommended_config_flags)

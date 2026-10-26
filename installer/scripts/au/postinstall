@@ -1,0 +1,4 @@
+#!/bin/bash
+# Refresca la lista de Audio Units para que Logic / GarageBand vean el plugin sin reiniciar la Mac.
+killall -9 AudioComponentRegistrar >/dev/null 2>&1 || true
+exit 0

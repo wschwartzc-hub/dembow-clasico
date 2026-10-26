@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="2">
+    <title>{{PRODUCT_NAME}} {{VERSION}}</title>
+    <organization>{{BUNDLE_ID}}</organization>
+
+    <domains enable_anywhere="false" enable_currentUserHome="false" enable_localSystem="true"/>
+    <options customize="allow" require-scripts="false" hostArchitectures="arm64,x86_64"/>
+    <allowed-os-versions>
+        <os-version min="11.0"/>
+    </allowed-os-versions>
+
+    <background file="background.png" mime-type="image/png" alignment="bottomleft" scaling="none"/>
+    <background-darkAqua file="background-dark.png" mime-type="image/png" alignment="bottomleft" scaling="none"/>
+    <welcome file="welcome.html" mime-type="text/html"/>
+    <license file="license.html" mime-type="text/html"/>
+    <readme file="readme.html" mime-type="text/html"/>
+    <conclusion file="conclusion.html" mime-type="text/html"/>
+
+    <choices-outline>
+        <line choice="vst3"/>
+        <line choice="au"/>
+        <line choice="app"/>
+    </choices-outline>
+
+    <choice id="vst3" visible="true" start_selected="true"
+            title="VST3"
+            description="Plugin VST3 para Ableton Live, FL Studio, Cubase, Reaper, Studio One, Bitwig y otros. Se instala en /Library/Audio/Plug-Ins/VST3.">
+        <pkg-ref id="{{BUNDLE_ID}}.vst3"/>
+    </choice>
+    <choice id="au" visible="true" start_selected="true"
+            title="Audio Unit (AU)"
+            description="Plugin Audio Unit para Logic Pro, GarageBand, MainStage y otros. Se instala en /Library/Audio/Plug-Ins/Components.">
+        <pkg-ref id="{{BUNDLE_ID}}.au"/>
+    </choice>
+    <choice id="app" visible="true" start_selected="true"
+            title="App independiente"
+            description="{{PRODUCT_NAME}} como aplicación, para probarlo sin abrir un DAW. Se instala en Aplicaciones.">
+        <pkg-ref id="{{BUNDLE_ID}}.app"/>
+    </choice>
+
+    <pkg-ref id="{{BUNDLE_ID}}.vst3" version="{{VERSION}}" onConclusion="none">vst3.pkg</pkg-ref>
+    <pkg-ref id="{{BUNDLE_ID}}.au" version="{{VERSION}}" onConclusion="none">au.pkg</pkg-ref>
+    <pkg-ref id="{{BUNDLE_ID}}.app" version="{{VERSION}}" onConclusion="none">app.pkg</pkg-ref>
+</installer-gui-script>

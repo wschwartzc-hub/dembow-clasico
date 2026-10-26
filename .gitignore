@@ -1,0 +1,9 @@
+build/
+lab/build/
+dist/
+res/
+__pycache__/
+*.pyc
+.DS_Store
+.netlify/
+site_build/
